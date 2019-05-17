@@ -66,12 +66,11 @@ public class SpotifyServlet extends HttpServlet {
                             Song::new, st.getTrack());
                     songs.put(s.getId(), s);
 
-                    getOrAdd(albums, st.getTrack().getAlbum().getId(), Album::new,
-                            st.getTrack().getAlbum()).getSongs().add(s);
+                    getOrAdd(albums, st.getTrack().getAlbum().getId(), Album::new, st.getTrack().getAlbum())
+                            .getSongs().add(s);
 
-                    for(ArtistSimplified as : st.getTrack().getArtists()) {
-                        getOrAdd(artists, as.getId(), Artist::new, as).getSongs().add(s);
-                    }
+                    ArtistSimplified as = st.getTrack().getArtists()[0];
+                    getOrAdd(artists, as.getId(), Artist::new, as).getSongs().add(s);
                 }
                 offset += tracks.getLimit();
             } while(tracks.getNext() != null);
